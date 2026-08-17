@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Form Validation</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f2f2;
+    }
+
+    .form-box {
+      width: 350px;
+      margin: 50px auto;
+      background: white;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #aaa;
+    }
+
+    h2 {
+      text-align: center;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      box-sizing: border-box;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background: #2563eb;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    button:hover {
+      background: #1d4ed8;
+    }
+
+    .error {
+      color: red;
+      font-size: 14px;
+      margin: 0 0 8px;
+    }
+
+    #success {
+      color: green;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="form-box">
+
+    <h2>Registration Form</h2>
+
+    <form onsubmit="return validateForm()">
+
+      <!-- Name -->
+      <label>Name:</label>
+      <input type="text" id="name">
+      <p id="nameError" class="error"></p>
+
+      <!-- Email -->
+      <label>Email:</label>
+      <input type="text" id="email">
+      <p id="emailError" class="error"></p>
+
+      <!-- Password -->
+      <label>Password:</label>
+      <input type="password" id="password">
+      <p id="passwordError" class="error"></p>
+
+      <!-- Confirm Password -->
+      <label>Confirm Password:</label>
+      <input type="password" id="confirmPassword">
+      <p id="confirmPasswordError" class="error"></p>
+
+      <button type="submit">Submit</button>
+
+      <p id="success"></p>
+
+    </form>
+
+  </div>
+
+
+  <script>
+
+    function validateForm() {
+
+      // Get values
+      let name = document.getElementById("name").value.trim();
+      let email = document.getElementById("email").value.trim();
+      let password = document.getElementById("password").value;
+      let confirmPassword =
+        document.getElementById("confirmPassword").value;
+
+
+      // Clear previous errors
+      document.getElementById("nameError").innerHTML = "";
+      document.getElementById("emailError").innerHTML = "";
+      document.getElementById("passwordError").innerHTML = "";
+      document.getElementById("confirmPasswordError").innerHTML = "";
+      document.getElementById("success").innerHTML = "";
+
+
+      let valid = true;
+
+
+      // --------------------
+      // Name Validation
+      // --------------------
+
+      if (name === "") {
+
+        document.getElementById("nameError").innerHTML =
+          "Name is required";
+
+        valid = false;
+
+      }
+
+
+      // --------------------
+      // Email Validation
+      // --------------------
+
+      let emailPattern =
+        /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+
+      if (email === "") {
+
+        document.getElementById("emailError").innerHTML =
+          "Email is required";
+
+        valid = false;
+
+      }
+      else if (!emailPattern.test(email)) {
+
+        document.getElementById("emailError").innerHTML =
+          "Enter a valid email";
+
+        valid = false;
+
+      }
+
+
+      // --------------------
+      // Password Validation
+      // --------------------
+
+      if (password === "") {
+
+        document.getElementById("passwordError").innerHTML =
+          "Password is required";
+
+        valid = false;
+
+      }
+      else if (password.length < 6) {
+
+        document.getElementById("passwordError").innerHTML =
+          "Password must contain at least 6 characters";
+
+        valid = false;
+
+      }
+
+
+      // --------------------
+      // Confirm Password
+      // --------------------
+
+      if (confirmPassword === "") {
+
+        document.getElementById("confirmPasswordError").innerHTML =
+          "Please confirm your password";
+
+        valid = false;
+
+      }
+      else if (password !== confirmPassword) {
+
+        document.getElementById("confirmPasswordError").innerHTML =
+          "Passwords do not match";
+
+        valid = false;
+
+      }
+
+
+      // --------------------
+      // Success Message
+      // --------------------
+
+      if (valid) {
+
+        document.getElementById("success").innerHTML =
+          "Form submitted successfully!";
+
+      }
+
+
+      // Prevent actual form submission
+      return false;
+
+    }
+
+  </script>
+
+</body>
+</html>
